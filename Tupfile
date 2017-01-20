@@ -1,0 +1,16 @@
+CXX = clang++-3.8
+CXXFLAGS += -Wall -std=c++11
+
+OUT.BASE.NAME = sscan.clang
+
+ifeq (@(SSCAN_DEBUG),y) 
+	CXXOPT += -g
+	OUT.NAME = $(OUT.BASE.NAME).dbg
+else
+	CXXOPT += -O3 -DNDEBUG
+	LINK.OPT += -s 
+	OUT.NAME = $(OUT.BASE.NAME)
+endif
+
+: foreach *.cc |> $(CXX) $(CXXOPT) $(CXXFLAGS) -c %f -o %o |> %B.o
+: *.o |> $(CXX) $(CXXFLAGS) $(LINK.OPT) %f -o %o |> $(OUT.NAME)

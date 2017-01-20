@@ -1,0 +1,4 @@
+Eigen/*
+build*/
+tests*
+.tup
